@@ -7,6 +7,7 @@
 //
 
 #import "TCSelectionHeader.h"
+#import "TCUtility.h"
 
 @interface TCSelectionExpandableItem ()
 
@@ -28,8 +29,8 @@
     [super layoutSubviews];
 
     if ([self.itemTitleArray count] > 1) {
-        self.titleEdgeInsets = UIEdgeInsetsMake(0, -self.imageView.width - 5, 0, self.imageView.width);
-        self.imageEdgeInsets = UIEdgeInsetsMake(0, self.titleLabel.width, 0, -self.titleLabel.width - 5);
+        self.titleEdgeInsets = UIEdgeInsetsMake(0, -self.imageView.frame.size.width - 5, 0, self.imageView.frame.size.width);
+        self.imageEdgeInsets = UIEdgeInsetsMake(0, self.titleLabel.frame.size.width, 0, -self.titleLabel.frame.size.width - 5);
     } else {
         self.titleEdgeInsets = UIEdgeInsetsZero;
         self.imageEdgeInsets = UIEdgeInsetsZero;
@@ -114,7 +115,7 @@
     self.containerView.frame = self.bounds;
     [self.itemArray enumerateObjectsUsingBlock:^(TCSelectionExpandableItem *item, NSUInteger idx, BOOL *stop) {
         NSInteger count = [self.itemArray count];
-        item.frame = CGRectMake(self.width / count * idx, 0, self.width / count, self.height);
+        item.frame = CGRectMake(self.frame.size.width / count * idx, 0, self.frame.size.width / count, self.frame.size.height);
     }];
 }
 
@@ -195,11 +196,11 @@
     NSInteger count = [self.delegate numberOfHeaderItems];
     for (int idx = 0; idx < count; idx++) {
         TCSelectionExpandableItem *item = [[TCSelectionExpandableItem alloc] init];
-        item.frame = CGRectMake(self.width / count * idx, 0, self.width / count, self.height);
+        item.frame = CGRectMake(self.frame.size.width / count * idx, 0, self.frame.size.width / count, self.frame.size.height);
         [item.titleLabel setFont:[UIFont systemFontOfSize:13]];
-        [item setBackgroundImage:[UIImage imageFromColor:COMMON_GRAY_COLOR] forState:UIControlStateNormal];
-        [item setBackgroundImage:[UIImage imageFromColor:COMMON_LIGHT_GRAY_COLOR] forState:UIControlStateHighlighted];
-        [item setTitleColor:COMMON_TEXT_DARK_COLOR forState:UIControlStateNormal];
+        [item setBackgroundImage:[UIImage imageFromColor:[UIColor grayColor]] forState:UIControlStateNormal];
+        [item setBackgroundImage:[UIImage imageFromColor:[UIColor lightGrayColor]] forState:UIControlStateHighlighted];
+        [item setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
 
         item.delegate = self;
         [item setExpanded:NO];

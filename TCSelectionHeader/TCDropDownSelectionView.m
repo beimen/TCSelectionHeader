@@ -7,6 +7,7 @@
 //
 
 #import "TCDropDownSelectionView.h"
+#import "TCUtility.h"
 
 #define RGB_COLOR(r,g,b)            RGB_COLOR_ALPHA(r,g,b,1)
 #define RGB_COLOR_ALPHA(r,g,b,a)    [UIColor colorWithRed:(r)/255.0f green:(g)/255.0f blue:(b)/255.0f alpha:a]
@@ -71,9 +72,9 @@
     [super layoutSubviews];
 
     [self.buttonArray enumerateObjectsUsingBlock:^(TCDropDownSelectionButton *button, NSUInteger idx, BOOL *stop) {
-        button.origin = CGPointMake(8 + (button.tag % 4) * (button.width + 8), (button.height + 12) * (button.tag / 4) + 12);
+        button.frame = CGRectMake(8 + (button.tag % 4) * (button.frame.size.width + 8), (button.frame.size.height + 12) * (button.tag / 4) + 12, button.frame.size.width, button.frame.size.height);
     }];
-    self.containerView.height = [(TCDropDownSelectionButton *) [self.buttonArray lastObject] bottom] + 12;
+    self.containerView.frame = CGRectMake(self.containerView.frame.origin.x, self.containerView.frame.origin.y, self.containerView.frame.size.width, CGRectGetMaxY([(TCDropDownSelectionButton *) [self.buttonArray lastObject] frame]) + 12);
 }
 
 #pragma mark - Setter
@@ -88,7 +89,7 @@
 
 - (UIView *)containerView {
     if (_containerView == nil) {
-        self.containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.width, self.height)];
+        self.containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
         _containerView.backgroundColor = [UIColor whiteColor];
         _containerView.alpha = 1.0f;
     }
@@ -97,7 +98,7 @@
 
 - (UIView *)backgroundView {
     if (_backgroundView == nil) {
-        self.backgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.width, self.height)];
+        self.backgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
         _backgroundView.alpha = 0.7f;
         _backgroundView.backgroundColor = TCDROPDOWNSELECTION_BACKGROUND_COLOR;
         [_backgroundView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedAction)]];
@@ -115,7 +116,7 @@
 #pragma mark - Private Methods
 
 - (void)creatButtons {
-    TCAssert([self.titleArray count]);
+    assert([self.titleArray count]);
 
     [self.buttonArray makeObjectsPerformSelector:@selector(removeFromSuperview)];
     [self.buttonArray removeAllObjects];
@@ -131,7 +132,7 @@
 
 - (TCDropDownSelectionButton *)createButtonWithTitle:(NSString *)title withTag:(NSInteger)tag {
     TCDropDownSelectionButton *button = [TCDropDownSelectionButton buttonWithType:UIButtonTypeCustom];
-    button.frame = CGRectMake(0, 0, (self.width - 40) / 4, 40);
+    button.frame = CGRectMake(0, 0, (self.frame.size.width - 40) / 4, 40);
     button.layer.cornerRadius = 4.0f;
     button.layer.borderWidth = 1.0f;
     button.layer.borderColor = TCDROPDOWNSELECTION_BUTTON_GRAY_COLOR.CGColor;
@@ -140,13 +141,13 @@
     [button.titleLabel setFont:[UIFont systemFontOfSize:13]];
     [button setTitle:title forState:UIControlStateNormal];
     [button setTitle:title forState:UIControlStateHighlighted];
-    [button setTitleColor:COMMON_TEXT_DARK_COLOR forState:UIControlStateNormal];
-    [button setTitleColor:COMMON_WHITE_COLOR forState:UIControlStateHighlighted];
-    [button setTitleColor:COMMON_WHITE_COLOR forState:UIControlStateSelected];
+    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
     [button setTitleColor:TCDROPDOWNSELECTION_BUTTON_GRAY_COLOR forState:UIControlStateDisabled];
-    [button setBackgroundImage:[UIImage imageFromColor:COMMON_RED_COLOR] forState:UIControlStateHighlighted];
-    [button setBackgroundImage:[UIImage imageFromColor:COMMON_RED_COLOR] forState:UIControlStateSelected];
-    [button setBackgroundImage:[UIImage imageFromColor:COMMON_WHITE_COLOR] forState:UIControlStateDisabled];
+    [button setBackgroundImage:[UIImage imageFromColor:[UIColor redColor]] forState:UIControlStateHighlighted];
+    [button setBackgroundImage:[UIImage imageFromColor:[UIColor redColor]] forState:UIControlStateSelected];
+    [button setBackgroundImage:[UIImage imageFromColor:[UIColor whiteColor]] forState:UIControlStateDisabled];
 
     button.tag = tag;
     [button addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -182,7 +183,7 @@
 
 - (void)highlightBorder:(UIButton *)sender {
     if (!sender.isSelected) {
-        sender.layer.borderColor = COMMON_RED_COLOR.CGColor;
+        sender.layer.borderColor = [UIColor redColor].CGColor;
     }
 }
 
@@ -201,11 +202,11 @@
 - (void)showView {
     self.hidden = NO;
     self.backgroundView.alpha = 0.0f;
-    self.containerView.y = -self.containerView.height;
+    self.containerView.frame = CGRectMake(self.containerView.frame.origin.x, -self.containerView.frame.size.height, self.containerView.frame.size.width, self.containerView.frame.size.height);
     [UIView animateWithDuration:0.25f
                      animations:^{
                          self.backgroundView.alpha = 0.7f;
-                         self.containerView.y = 0;
+                         self.containerView.frame = CGRectMake(self.containerView.frame.origin.x, 0, self.containerView.frame.size.width, self.containerView.frame.size.height);
                      }
                      completion:^(BOOL finished){
                          self.hidden = NO;
@@ -218,7 +219,7 @@
     [UIView animateWithDuration:0.25f
                      animations:^{
                          self.backgroundView.alpha = 0.0f;
-                         self.containerView.y = -self.containerView.height;
+                         self.containerView.frame = CGRectMake(self.containerView.frame.origin.x, -self.containerView.frame.size.height, self.containerView.frame.size.width, self.containerView.frame.size.height);
                      }
                      completion:^(BOOL finished) {
                          self.hidden = YES;
@@ -229,7 +230,7 @@
     UIView *targetView = [[UIApplication sharedApplication].delegate.window.rootViewController view];
     [targetView addSubview:self];
     CGRect convertedRect = [targetView convertRect:view.frame toView:targetView];
-    self.y = convertedRect.origin.y + convertedRect.size.height;
+    self.frame = CGRectMake(self.frame.origin.x, convertedRect.origin.y + convertedRect.size.height, self.frame.size.width, self.frame.size.height);
     [self showView];
 }
 

@@ -16,6 +16,7 @@
 		FE80DF4B1B3B2A5C00933AE6 /* TCSelectionHeaderDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FE80DF4A1B3B2A5C00933AE6 /* TCSelectionHeaderDemoTests.m */; };
 		FE80DF601B3B2BC700933AE6 /* TCDropDownSelectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE80DF5D1B3B2BC700933AE6 /* TCDropDownSelectionView.m */; };
 		FE80DF611B3B2BC700933AE6 /* TCSelectionHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = FE80DF5F1B3B2BC700933AE6 /* TCSelectionHeader.m */; };
+		FED411AE1B3DAA730040B072 /* TCUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = FED411AD1B3DAA730040B072 /* TCUtility.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +47,8 @@
 		FE80DF5D1B3B2BC700933AE6 /* TCDropDownSelectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCDropDownSelectionView.m; sourceTree = "<group>"; };
 		FE80DF5E1B3B2BC700933AE6 /* TCSelectionHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCSelectionHeader.h; sourceTree = "<group>"; };
 		FE80DF5F1B3B2BC700933AE6 /* TCSelectionHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCSelectionHeader.m; sourceTree = "<group>"; };
+		FED411AC1B3DAA730040B072 /* TCUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCUtility.h; sourceTree = "<group>"; };
+		FED411AD1B3DAA730040B072 /* TCUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCUtility.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +136,8 @@
 				FE80DF5D1B3B2BC700933AE6 /* TCDropDownSelectionView.m */,
 				FE80DF5E1B3B2BC700933AE6 /* TCSelectionHeader.h */,
 				FE80DF5F1B3B2BC700933AE6 /* TCSelectionHeader.m */,
+				FED411AC1B3DAA730040B072 /* TCUtility.h */,
+				FED411AD1B3DAA730040B072 /* TCUtility.m */,
 			);
 			name = TCSelectionHeader;
 			path = ../TCSelectionHeader;
@@ -243,6 +248,7 @@
 				FE80DF601B3B2BC700933AE6 /* TCDropDownSelectionView.m in Sources */,
 				FE80DF341B3B2A5B00933AE6 /* AppDelegate.m in Sources */,
 				FE80DF311B3B2A5B00933AE6 /* main.m in Sources */,
+				FED411AE1B3DAA730040B072 /* TCUtility.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -437,6 +443,7 @@
 				FE80DF501B3B2A5C00933AE6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		FE80DF511B3B2A5C00933AE6 /* Build configuration list for PBXNativeTarget "TCSelectionHeaderDemoTests" */ = {
 			isa = XCConfigurationList;
@@ -445,6 +452,7 @@
 				FE80DF531B3B2A5C00933AE6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
